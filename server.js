@@ -4,6 +4,7 @@ const res = require('express/lib/response')
 const morgan = require('morgan')
 const colors = require('colors')
 const connectDB = require('./config/db')
+const errorHandler = require('./middleware/error')
 // const logger = require('./middleware/logger')
 
 // Load our env vars
@@ -21,10 +22,10 @@ const bootcamps = require('./routes/bootcamps')
 
 const app = express();
 
-//Body parser
+//**********  Body parser ************
 app.use(express.json())
 
-//Dev logging midddleware
+//*********   Dev logging midddleware ***********
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
@@ -32,11 +33,13 @@ if (process.env.NODE_ENV === 'development') {
 
 //app.use(logger)
 
-//Mount routers
+//MOST IMPORTANT MIDLEWARE, stays high
+// **************  Mount routers ************
 app.use('/api/v1/bootcamps', bootcamps)
 
 
-
+// ******* Error middleware *********
+app.use(errorHandler) //catches error that have error argument as positive
 
 const PORT = process.env.PORT || 5000
 

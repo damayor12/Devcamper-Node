@@ -8,7 +8,7 @@ const {
 } = require('../controllers/bootcamps');
 const router = express.Router();
 
-//normal /api/v1/bootcamps routes
+//normal /api/v1/bootcamps routes 
 router
   .route('/')
   .get(getBootcamps)
